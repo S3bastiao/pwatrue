@@ -290,9 +290,9 @@ for(let i=0;i<pp.count;i++){const j=i%PN,c=Math.floor(i/PN)%NS,o=c%2?1:-1,k=KJ[j
 const eg=new THREE.EdgesGeometry(geo,10);
 const lm=new THREE.LineBasicMaterial({color:0xb3e2ff,transparent:true,opacity:.2,blending:THREE.AdditiveBlending,depthWrite:false});
 const mk=m=>{const o=new THREE.Group();o.add(new THREE.Mesh(geo,m),new THREE.LineSegments(eg,lm));return o};
-const g=mk(dmF),mi=mk(dmB),mg=new THREE.Group();mg.add(mi);mg.scale.y=-1;mg.position.y=FY;W.add(g,mg);
+const g=mk(dmF),mi=mk(dmB),mg=new THREE.Group();mg.add(mi);mg.scale.y=-1;mg.position.y=FY;g.traverse(o=>o.renderOrder=3);mg.traverse(o=>o.renderOrder=1);W.add(g,mg);
 const dust=new Float32Array(900);for(let i=0;i<300;i++){const r=2+Math.random()*3,a=Math.random()*6.283,y=Math.random()*5-1.5;dust.set([r*Math.cos(a),y,r*Math.sin(a)],i*3)}
-const dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.BufferAttribute(dust,3));const dp_=new THREE.Points(dg,new THREE.PointsMaterial({size:.03,color:0xb3e2ff,transparent:true,opacity:.7}));W.add(dp_);
+const dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.BufferAttribute(dust,3));const dp_=new THREE.Points(dg,new THREE.PointsMaterial({size:.03,color:0xb3e2ff,transparent:true,opacity:.7}));dp_.renderOrder=3;W.add(dp_);
 const fm=new THREE.ShaderMaterial({uniforms:U,transparent:true,depthWrite:false,
 vertexShader:`varying vec3 vW;void main(){vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`,
 fragmentShader:`uniform float uT,uX,uPr,uP,uR;varying vec3 vW;
@@ -333,11 +333,4 @@ if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWor
 bellSt();upd();r();
 </script>
 </body>
-  <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('Service Worker registrado!', reg))
-      .catch(err => console.error('Erro ao registrar Service Worker:', err));
-  }
-</script>
 </html>
